@@ -1,2 +1,3 @@
 # django-style-guide
-This is the standard django style guide to be followed across zaya.
+This is the standard style guide to be followed across zaya for different languages
+
