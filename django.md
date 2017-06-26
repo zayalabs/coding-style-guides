@@ -19,11 +19,10 @@ This guide gives standarad rules to follow while writting code for any major dja
 	* [Format](#format)
 * [Django](#django)
 	* [General](#general)
-	* [Code Structure](#code-structure)
-	* Model
-	* Template
-	* APIException
-	* URLS
+	* [Django project Structure](#django-project-structure)
+	* [Model](#model)
+	* [Template](#template)
+	* [APIException](#apiexception)
 
 ## Coding Style
 ### Indentation
@@ -527,6 +526,104 @@ class MyModel(models.Model):
 	def custom_function(self):
 		pass
 ```
-### Code Structure
+### Django project Structure
 * Each app must be independent and plugable apps with its own functionally.
 * Project must contains a settings folder with three settings in it **local.py**, **prod.py**, **staging.py** and a **sample.local.py**. Only sample.local.py must be push to remote repository with no secret keys in it.
+* Each independent app in the project must have its own urls.py and all the apps urls must be included inside th 
+
+### Model
+* Model fields must also follow standard naming convenction (lowercase_underscore).
+* **ChoiceField** must have its indivisual entries defined as class constant varaibles.
+
+Good
+```python
+class Superhero(models.Model):
+	FLY, WALK, TELEPORT = "fly", "walk", "teleport"
+	commutation = models.ChoiceField(
+				(FLY, "Fly"),
+				(WALK, "Walk"),
+				(TELEPORT, "Teleport")
+			)
+```
+Bad
+```python
+class Superhero(models.Model):
+	commutation = models.ChoiceField(
+			("fly", "Fly"),
+			("walk", "Walk"),
+			("teleport", "Teleport")
+		)
+```
+* When use any realted field for model always use string to specify the model which is realted to instead of specifing the class.
+
+Good
+```python
+class MyModel(models.Model):
+	user = models.ForeignKey("auth.models.User")
+```
+Bad
+```python
+from auth.models import User
+
+class MyModel(models.Model):
+	user = models.ForeignKey(User)
+```
+
+### Template
+* Template varaible must have a leading and trailing whitespaces inside the clury parentheses.
+
+Good
+```html
+	<h1>Welcome {{ user.username }} </h1>
+```
+Bad
+```html
+	<h1>Welcome {{user.username}}</h1>
+```
+
+### APIException
+* Errors in request must be handel by rest exception or any sub class of rest exception. Never use custom response to indicate error.
+
+Good
+```python
+from rest_framework import status, views
+from rest_framework.exceptions import APIException
+
+class InvalidPrimaryKeyException(APIException):
+	'''
+		Custom Rest exception to denote invalid primary key error in the Api.
+	'''
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_detail = ('Invalid pk {pk} for model {model}.')
+    default_code = 'invalid_pk'
+
+    def __init__(self, pk="", model="", detail=None, code=None):
+        if detail is None:
+            detail = self.default_detail.format(pk=pk, model=model)
+        super(InvalidPrimaryKeyException, self).__init__(detail, code)
+
+class SomeView(views.APIView):
+	param_user_id = "user_id"
+	
+	def get(self, request, *args, **kwargs):
+		user_id = request.query_param.get(self.param_user_name, None)
+		try:
+			user = User.objects.get(id = user_id)
+		catch User.DoesNotExist:
+			raise InvalidPrimaryKeyException(pk = user_id, model = "User")  # Custom rest exception
+```
+Bad
+```python
+from rest_framework import views, status
+from rest_framework.response import Response
+
+class SomeView(views.APIView):
+	param_user_id = "user_id"
+
+	def get(self, request, *args, **kwargs):
+		user_id = request.query_param.get(self.param_user_id, None)
+		try:
+			user = User.objects.get(id = user_id)
+		catch User.DoesNotExist:
+			return Respone("Invalid pk " + user_id + " for model User.", status = status.HTTP_400_BAD_REQUEST)  # Bad direct response
+```
