@@ -428,6 +428,8 @@ Bad
 	is_list = (type(var) == type(list))
 ```
 * Context manager should be invoke with function and not with variable
+
+
 Good
 ```python
 with open("file.txt") as file:
