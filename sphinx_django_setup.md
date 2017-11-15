@@ -4,8 +4,8 @@
 # Table of Contents
 1. [Installation](#installation)
 2. [Setup](#setup)
-3. [Building](#building)
-4. [Theming](#theming)
+3. [Theming](#theming)
+4. [Building](#building)
 5. [Documentation](#documentation)
 
 # Installation
