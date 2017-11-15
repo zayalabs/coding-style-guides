@@ -204,6 +204,17 @@ Welcome to sphinxtest's documentation! (Change this to project title)
 
 Thats done
 
+Also you would like to change the theme to match the readthedocs(rtd) theme. [Read the docs theme](https://github.com/rtfd/sphinx_rtd_theme) . Go to [more themes](https://github.com/yoloseem/awesome-sphinxdoc#themes) in case you are interested. For now lets continue with rtd theme. 
+
+# Install and configure rtd theme
+` pip install sphinx_rtd_theme` 
+
+Once installed go to conf.py and change the option `html_theme` to look like   
+`html_theme = 'sphinx_rtd_theme'`.  
+Consider installing https://github.com/audreyr/sphinx-gui in a seperate virtualenv to use gui to edit sphinx doc. 
+
+You can look to rtd documentation to adjust more value if you need. Woooooo. Time to see some html now .
+
 # Building
 For bulding html docs for the project run the following commands
 ```
