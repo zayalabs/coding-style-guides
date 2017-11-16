@@ -152,7 +152,7 @@ django.setup()
 	touch docs/app_name/index.rst
 ```
 
-* Now edit the **docs/content/index.rst** to include all **".py"** u want to be included in doc generation
+* Now edit the **docs/app_name/index.rst** to include all **".py"** u want to be included in doc generation
 
 example
 ```
@@ -161,30 +161,81 @@ App Name
 Basic intro to the app
 
 
+Database
+==========
+All Database related code
+
+Adapter
+---------
+.. automodule:: app_name.adapter
+    :members:
+    :private-members:
+    :show-inheritance:
+
+
 Models
-======
+--------
 .. automodule:: app_name.models
     :members:
     :private-members:
     :show-inheritance:
 
+Querysets
+----------
+.. automodule:: app_name.queryset
+    :members:
+    :private-members:
+    :show-inheritance:
 
-View
-======
+
+
+Rest Framework
+================
+All code related for supporting API's
+
+Views
+-----------
 .. automodule:: app_name.views
     :members:
     :private-members:
     :show-inheritance:
 
-Utils
-=========
-.. automodule:: app_name.utils
+Urls
+--------
+.. automodule:: app_name.urls
     :members:
     :private-members:
     :show-inheritance:
+
+Filters
+----------
+.. automodule:: app_name.filters
+    :members:
+    :private-members:
+    :show-inheritance:
+
+
+Signals
+==========
+Singals in the app
+
+.. automodule:: app_name.signals
+    :members:
+    :private-members:
+    :show-inheritance:
+
+Tasks
+======
+Async Tasks
+
+.. automodule:: app_name.tasks
+    :members:
+    :private-members:
+    :show-inheritance:
+    
 ```
 Here each **".py"** in your app is maintained in the statment **.. automodule:: app_name.utils**. 
-[More information on formating](https://pythonhosted.org/an_example_pypi_project/sphinx.html)
+[More information on formating](https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html)
 
 * Edit **docs/index.rst** to autoinclude any **index.rst** file.
 
