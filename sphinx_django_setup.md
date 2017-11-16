@@ -145,50 +145,48 @@ django.setup()
 
 ### Make sphinx discover docs
 
-* In the **docs** folder create a seprate folder for each app. In the new folder create a **index.rst** Here we will assume he have a app named content.
+* In the **docs** folder create a seprate folder for each app. In the new folder with the same name as your app and then create a **index.rst**.
 
 ```
-	mkdir docs/content
-	touch docs/content/index.rst
+	mkdir docs/app_name
+	touch docs/app_name/index.rst
 ```
 
 * Now edit the **docs/content/index.rst** to include all **".py"** u want to be included in doc generation
 
 example
 ```
-Content
+App Name
 ************************
 Basic intro to the app
 
 
 Models
 ======
-.. automodule:: content.models
+.. automodule:: app_name.models
     :members:
-    :undoc-members:
-    :inherited-members:
+    :private-members:
     :show-inheritance:
+
 
 View
 ======
-.. automodule:: content.views
+.. automodule:: app_name.views
     :members:
-    :undoc-members:
-    :inherited-members:
+    :private-members:
     :show-inheritance:
 
 Utils
 =========
-.. automodule:: content.utils
+.. automodule:: app_name.utils
     :members:
-    :undoc-members:
-    :inherited-members:
+    :private-members:
     :show-inheritance:
 ```
-Here each **".py"** is maintained in the statment **.. automodule:: content.utils**. 
+Here each **".py"** in your app is maintained in the statment **.. automodule:: app_name.utils**. 
 [More information on formating](https://pythonhosted.org/an_example_pypi_project/sphinx.html)
 
-* Edit **docs/index.rst** to include the newly created file.
+* Edit **docs/index.rst** to autoinclude any **index.rst** file.
 
 example
 ```
@@ -198,9 +196,10 @@ Welcome to sphinxtest's documentation! (Change this to project title)
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Apps:
+   :glob:
 
-   content/index
+   **/index
 ```
 
 Thats done
